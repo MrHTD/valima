@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=750, user-scalable=yes">
     <title>Valima Invitation</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,6 +17,7 @@
             --navy-blue: #285a76;
             --soft-gold: #C4A484;
             --white: #FFFFFF;
+            --bg-color: #f8ece0;
         }
 
         * {
@@ -25,6 +26,7 @@
             padding: 0;
         }
 
+        /* --- BASE STYLES (Mobile First approach) --- */
         body {
             min-height: 100vh;
             display: flex;
@@ -32,7 +34,7 @@
             align-items: center;
             font-family: 'Cinzel', serif;
             color: var(--navy-blue);
-            padding: 40px 20px;
+            padding: 20px;
             overflow-x: hidden;
         }
 
@@ -49,7 +51,6 @@
             /* sits between bg-layer and content */
         }
 
-        /* --- BACKGROUND --- */
         .bg-fixed-layer {
             position: fixed;
             top: 0;
@@ -60,7 +61,6 @@
             background-size: cover;
             background-position: center center;
             z-index: -10;
-            /* Subtle Zoom Effect on Background */
             animation: slowZoom 20s infinite alternate;
         }
 
@@ -74,32 +74,281 @@
             }
         }
 
-        /* --- CARD STYLING --- */
+        /* DEFAULT CARD STYLES (Desktop Baseline) */
         .card {
             width: 100%;
             max-width: 620px;
             aspect-ratio: 1240 / 1748;
-            background-color: #FDFBF8 !important;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-
             padding: 4% 6%;
-
             text-align: center;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             border-radius: 8px;
             position: relative;
-            background-color: #fff;
-            margin: 20px 0;
-
-            /* ANIMATION: Card Entrance */
+            background-color: #f8ece0;
+            margin: 40px 0;
             opacity: 0;
-            /* Start invisible */
             animation: cardEntrance 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
+        /* THE EXPANDING BORDER */
+        .card::before {
+            content: '';
+            position: absolute;
+            /* Desktop Default: 120% */
+            width: 120%;
+            height: 120%;
+            top: -10%;
+            left: -10%;
+            background-image: url('./images/border.webp');
+            background-size: 100% 100%;
+            background-position: center;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            animation: bloom 0.8s ease-out 0.8s forwards;
+
+        }
+
+        @keyframes bloom {
+            from {
+                opacity: 0;
+                /* Start rotated and small */
+                transform: scale(0.5);
+            }
+
+            to {
+                opacity: 0.95;
+                /* End rotated and full size */
+                transform: scale(1);
+            }
+        }
+
+        /* --- CORNER FLOWERS --- */
+        .corner-flower {
+            position: absolute;
+            width: 30%;
+            max-width: 250px;
+            height: auto;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+            /* Start hidden */
+        }
+
+        /* 1. TOP LEFT (Specific Animation with Rotation) */
+        .top-left {
+            top: -25px;
+            left: -25px;
+            /* We call a specific animation that INCLUDES the rotation */
+            animation: bloomTopLeft 1.2s ease-out 0.8s forwards;
+        }
+
+        /* 2. BOTTOM RIGHT (Normal Animation) */
+        .bottom-right {
+            bottom: -25px;
+            right: -25px;
+            animation: bloomBottomRight 1.2s ease-out 0.8s forwards;
+        }
+
+        /* --- KEYFRAMES --- */
+
+        /* This animation keeps the flower rotated 180deg while it grows */
+        @keyframes bloomTopLeft {
+            from {
+                opacity: 0;
+                /* Start rotated and small */
+                transform: rotate(180deg) scale(0.5);
+            }
+
+            to {
+                opacity: 0.95;
+                /* End rotated and full size */
+                transform: rotate(180deg) scale(1);
+            }
+        }
+
+        /* This is the normal animation for the bottom flower */
+        @keyframes bloomBottomRight {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            to {
+                opacity: 0.95;
+                transform: scale(1);
+            }
+        }
+
+        /* TYPOGRAPHY DEFAULTS */
+        .content-layer {
+            position: relative;
+            z-index: 20;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .anim-text {
+            opacity: 0;
+            animation: slideUpFade 0.8s ease-out forwards;
+        }
+
+        .intro {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: #444;
+            animation-delay: 0.4s;
+            white-space: wrap;
+        }
+
+        .names {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            margin: 5px 0;
+            line-height: 1.2;
+            color: var(--navy-blue);
+            text-shadow: 0 5px 10px rgba(199, 168, 107, 0.25);
+            white-space: nowrap;
+            animation-delay: 0.6s;
+        }
+
+        .ampersand {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            display: block;
+            margin: 5px 0;
+            color: var(--soft-gold);
+            opacity: 0;
+            animation: popIn 0.6s 0.7s forwards;
+        }
+
+        .invite-text {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin: 20px 0;
+            color: #666;
+            border-bottom: 1px solid #eee;
+            display: inline-block;
+            padding-bottom: 5px;
+            animation-delay: 0.8s;
+        }
+
+        .date-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 10px;
+            animation-delay: 1.0s;
+        }
+
+        .date-part {
+            text-align: center;
+        }
+
+        .month,
+        .year {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .day-group {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .day-name {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: var(--soft-gold);
+        }
+
+        .day-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--navy-blue);
+        }
+
+        .separator {
+            width: 1px;
+            height: 40px;
+            background-color: var(--navy-blue);
+            opacity: 0.5;
+        }
+
+        .details {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 600;
+            animation-delay: 1.2s;
+        }
+
+        .reception {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            color: var(--navy-blue);
+            margin-bottom: 20px;
+            animation-delay: 1.4s;
+        }
+
+        .countdown {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.8rem;
+            padding: 10px 20px;
+            color: var(--white);
+            background: var(--navy-blue);
+            border: 1px solid #eee;
+            border-radius: 50px;
+            display: inline-block;
+            white-space: nowrap;
+            animation-delay: 1.6s;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .venue-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 8px;
+            color: var(--navy-blue);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 700;
+        }
+
+        .venue-link:hover {
+            transform: translateY(-2px);
+            color: var(--soft-gold);
+        }
+
+        .map-icon {
+            width: 1.3em;
+            height: 1.3em;
+            fill: var(--soft-gold);
+            transition: transform 0.3s ease;
+        }
+
+        .venue-link:hover .map-icon {
+            transform: scale(1.2);
+        }
+
+        /* ANIMATIONS KEYFRAMES */
         @keyframes cardEntrance {
             from {
                 opacity: 0;
@@ -112,117 +361,10 @@
             }
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            width: 120%;
-            height: 120%;
-            top: -10%;
-            left: -13%;
-            background-image: url('./images/border.webp');
-            background-size: 100% 100%;
-            background-position: center;
-            z-index: 0;
-            pointer-events: none;
-
-            /* Border fades in slightly later */
-            opacity: 0;
-            animation: fadeIn 1.5s ease-out 0.5s forwards;
-        }
-
         @keyframes fadeIn {
             to {
                 opacity: 1;
             }
-        }
-
-        /* --- CORNER FLOWERS --- */
-        .corner-flower {
-            position: absolute;
-            width: 35%;
-            max-width: 450px;
-            min-width: 250px;
-            height: auto;
-            z-index: 10;
-            pointer-events: none;
-
-            /* Flower Animation */
-            opacity: 0;
-            animation: flowerBloom 1.2s ease-out 0.8s forwards;
-        }
-
-        @keyframes flowerBloom {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-
-            to {
-                opacity: 0.95;
-                transform: scale(1);
-            }
-        }
-
-        /* We need strict rules for rotation to prevent animation conflict */
-        .top-left {
-            top: -30px;
-            left: -30px;
-            /* Combine the static rotation with the animation target in a wrapper if needed, 
-               but here we adjust the flowerBloom keyframe or simply rely on opacity for simplicity 
-               to avoid breaking the rotate(180deg). 
-               
-               Trick: Apply rotation via the ID or specific class, and animation to generic. 
-            */
-            transform: rotate(180deg);
-            /* To animate this while keeping rotation, we use a separate animation */
-            animation: bloomTopLeft 1.2s ease-out 0.8s forwards;
-        }
-
-        .bottom-right {
-            bottom: -30px;
-            right: -30px;
-            animation: bloomBottomRight 1.2s ease-out 0.8s forwards;
-        }
-
-        /* Specific animations to preserve rotation */
-        @keyframes bloomTopLeft {
-            from {
-                opacity: 0;
-                transform: rotate(180deg) scale(0.8);
-            }
-
-            to {
-                opacity: 0.95;
-                transform: rotate(180deg) scale(1);
-            }
-        }
-
-        @keyframes bloomBottomRight {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-
-            to {
-                opacity: 0.95;
-                transform: scale(1);
-            }
-        }
-
-        /* --- CONTENT & TYPOGRAPHY --- */
-        .content-layer {
-            position: relative;
-            z-index: 20;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Common Animation Class for Staggered Text */
-        .anim-text {
-            opacity: 0;
-            animation: slideUpFade 0.8s ease-out forwards;
         }
 
         @keyframes slideUpFade {
@@ -237,41 +379,6 @@
             }
         }
 
-        .intro {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: clamp(0.7rem, 2.5vw, 0.95rem);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 3%;
-            font-weight: 700;
-            color: #444;
-            animation-delay: 0.4s;
-            /* Stagger 1 */
-        }
-
-        .names {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(1.6rem, 6vw, 3.5rem);
-            margin: 1% 0;
-            line-height: 1.2;
-            text-shadow: 0 5px 10px rgba(199, 168, 107, 0.25);
-            color: var(--navy-blue);
-            white-space: nowrap;
-            animation-delay: 0.6s;
-            /* Stagger 2 */
-        }
-
-        .ampersand {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            display: block;
-            margin: 5px 0;
-            color: var(--soft-gold);
-            /* Special pop animation for & */
-            opacity: 0;
-            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.7s forwards;
-        }
-
         @keyframes popIn {
             from {
                 opacity: 0;
@@ -284,167 +391,45 @@
             }
         }
 
-        .invite-text {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(0.6rem, 2vw, 0.8rem);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-top: 4%;
-            margin-bottom: 5%;
-            color: #666;
-            border-bottom: 1px solid #eee;
-            display: inline-block;
-            padding-bottom: 5px;
-            animation-delay: 0.8s;
-            /* Stagger 3 */
-        }
 
-        .date-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 5%;
-            width: 100%;
-            gap: 10px;
-            animation-delay: 1.0s;
-            /* Stagger 4 */
-        }
+        /* =========================================
+           MEDIA QUERIES (FROM YOUR REQUEST)
+           ========================================= */
 
-        .date-part {
-            text-align: center;
-        }
-
-        .month,
-        .year {
-            font-size: clamp(0.9rem, 3vw, 1.3rem);
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .day-group {
-            display: flex;
-            flex-direction: column;
-            line-height: 1;
-        }
-
-        .day-name {
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            margin-bottom: 2px;
-            color: var(--soft-gold);
-        }
-
-        .day-number {
-            font-size: clamp(1.8rem, 6vw, 2.8rem);
-            font-weight: 700;
-            color: var(--navy-blue);
-        }
-
-        .separator {
-            width: 1px;
-            height: 40px;
-            background-color: var(--navy-blue);
-            opacity: 0.5;
-        }
-
-        .details {
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
-            line-height: 1.6;
-            margin-bottom: 5%;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            animation-delay: 1.2s;
-            /* Stagger 5 */
-        }
-
-        .venue-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            margin-top: 8px;
-            color: var(--navy-blue);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 700;
-            position: relative;
-        }
-
-        /* Subtle pulse on hover to encourage clicking */
-        .venue-link:hover {
-            transform: translateY(-2px);
-            color: var(--soft-gold);
-            text-shadow: 0 0 10px rgba(196, 164, 132, 0.3);
-        }
-
-        .map-icon {
-            width: 1.3em;
-            height: 1.3em;
-            fill: var(--soft-gold);
-            flex-shrink: 0;
-            transition: transform 0.3s ease;
-        }
-
-        .venue-link:hover .map-icon {
-            transform: scale(1.2);
-            /* Icon grows on hover */
-        }
-
-        .reception {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(1.5rem, 5vw, 2.2rem);
-            color: var(--navy-blue);
-            margin-bottom: 4%;
-            animation-delay: 1.4s;
-            /* Stagger 6 */
-        }
-
-        .countdown {
-            font-family: 'Lato', sans-serif;
-            font-size: 0.8rem;
-            padding: 10px 20px;
-            color: #555;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #eee;
-            border-radius: 50px;
-            display: inline-block;
-            white-space: nowrap;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-
-            animation-delay: 1.6s;
-            /* Stagger 7 */
-        }
-
-        /* --- MEDIA QUERIES --- */
-        @media (max-width: 768px) {
-            .card {
-                padding: 30px 20px;
-                width: 85%;
-            }
-
-            .card::before {
-                width: 115%;
-                height: 115%;
-                top: -7.5%;
-                left: -7.5%;
-            }
-        }
-
-        @media (max-width: 480px) {
+        /* Smartphones (portrait) ----------- */
+        @media only screen and (max-width : 480px) {
             body {
                 padding: 30px 15px;
             }
 
             .card {
-                width: 90%;
-                padding: 25px 10px;
+                width: 100%;
+                height: 45rem;
+                padding: 30px 10px;
             }
 
+            /* Tighten the expanding border for mobile */
             .card::before {
-                width: 110%;
-                height: 110%;
-                top: -5%;
-                left: -5%;
+                width: 150%;
+                height: 130%;
+                top: -15%;
+                left: -28%;
+            }
+
+            /* Fonts adjustments */
+            .names {
+                font-size: 1.8rem;
+                white-space: normal;
+                line-height: 1.1;
+            }
+
+            .day-number {
+                font-size: 2rem;
+            }
+
+            .month,
+            .year {
+                font-size: 1rem;
             }
 
             .corner-flower {
@@ -461,32 +446,101 @@
                 bottom: -10px;
                 right: -10px;
             }
+        }
 
-            .separator {
-                height: 30px;
+        /* iPhones 6/7/8 Plus & Modern Large Phones ----------- */
+        @media only screen and (min-device-width : 414px) and (max-device-width : 736px) {
+            .card {
+                width: 100%;
+                height: 50rem;
+                padding: 35px 20px;
             }
 
-            .date-part {
-                padding: 0 5px;
+            .card::before {
+                width: 135%;
+                height: 125%;
+                top: -12.5%;
+                left: -20%;
             }
 
             .names {
-                font-size: clamp(1.4rem, 5.5vw, 2rem);
+                font-size: 2.2rem;
             }
         }
 
-        @media (max-width: 350px) {
-            .card::before {
-                display: none;
+        /* iPads (portrait and landscape) ----------- */
+        @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+            .card {
+                width: 85%;
+                padding: 40px 30px;
             }
 
-            .card {
-                border: 2px solid var(--soft-gold);
+            .card::before {
+                width: 115%;
+                height: 115%;
+                top: -7.5%;
+                left: -10%;
             }
 
             .names {
-                white-space: normal;
-                font-size: 1.5rem;
+                font-size: 3rem;
+            }
+        }
+
+        @media only screen and (max-device-width : 1220px) {
+            .card {
+                width: 85%;
+                padding: 40px 30px;
+            }
+
+            .card::before {
+                width: 115%;
+                height: 115%;
+                top: -7.5%;
+                left: -10%;
+            }
+
+            .names {
+                font-size: 3rem;
+            }
+        }
+
+        /* Desktops and laptops ----------- */
+        @media only screen and (min-width : 1224px) {
+
+            /* Standard Desktop Styles are mostly default, but ensuring max-width */
+            .card {
+                max-width: 620px;
+            }
+
+            .card::before {
+                width: 125%;
+                height: 120%;
+                top: -10%;
+                left: -15.5%;
+            }
+        }
+
+        /* Large screens ----------- */
+        @media only screen and (min-width : 1824px) {
+            .card {
+                max-width: 700px;
+            }
+
+            .names {
+                font-size: 4rem;
+            }
+        }
+
+        /* Samsung Galaxy S7 Edge / High DPI Androids ----------- */
+        @media only screen and (-webkit-min-device-pixel-ratio: 3),
+        only screen and (min-resolution: 192dpi) and (max-width:640px) {
+            .card {
+                width: 90%;
+            }
+
+            .names {
+                font-size: 2rem;
             }
         }
     </style>
@@ -554,7 +608,6 @@
 
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             const countdownElement = document.getElementById("countdown");
@@ -563,7 +616,7 @@
                 clearInterval(x);
                 countdownElement.innerHTML = "We are married!";
             } else {
-                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                countdownElement.innerHTML = `${days}d ${hours}h ${seconds}s`;
             }
         }, 1000);
     </script>
