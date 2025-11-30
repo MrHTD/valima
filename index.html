@@ -127,6 +127,54 @@
             }
         }
 
+        /* --- NEW: CONTAINER FOR INTERNAL PETALS --- */
+        #inner-petals-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            /* Behind text (20) but above bg */
+            pointer-events: none;
+            /* Allows clicking text through petals */
+        }
+
+        /* --- NEW: PETAL IMAGE STYLE --- */
+        .inner-petal {
+            position: absolute;
+            top: -20px;
+            /* Start above visibility */
+            width: 15px;
+            /* Size of the petal */
+            height: auto;
+            opacity: 0.7;
+            animation: fallRotate linear forwards;
+        }
+
+        @keyframes fallRotate {
+            0% {
+                transform: translateY(0) rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.9;
+                /* Make them visible quickly */
+            }
+
+            80% {
+                opacity: 0.9;
+                /* Keep them visible near the bottom */
+            }
+
+            100% {
+                /* Increased from 800px to 1200px to ensure they hit the floor */
+                transform: translateY(1200px) rotate(360deg) translateX(50px);
+                opacity: 0;
+            }
+        }
+
         /* --- CORNER FLOWERS --- */
         .corner-flower {
             position: absolute;
@@ -409,8 +457,141 @@
            MEDIA QUERIES (FROM YOUR REQUEST)
            ========================================= */
 
-        /* Smartphones (portrait) ----------- */
-        @media only screen and (max-width : 480px) {
+
+        /* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+        @media (min-width: 1281px) {
+
+            /* CSS */
+            .card {
+                width: 85%;
+                padding: 40px 30px;
+            }
+
+            .card::before {
+                width: 130%;
+                height: 130%;
+                top: -15%;
+                left: -18%;
+            }
+
+            .names {
+                font-size: 3rem;
+            }
+        }
+
+        /* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+        @media (min-width: 1025px) and (max-width: 1280px) {
+
+            /* CSS */
+            .card {
+                width: 85%;
+                padding: 40px 30px;
+            }
+
+            .card::before {
+                width: 115%;
+                height: 115%;
+                top: -7.5%;
+                left: -10%;
+            }
+
+            .names {
+                font-size: 3rem;
+            }
+        }
+
+        /* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+
+            /* CSS */
+            .card {
+                width: 85%;
+                padding: 40px 30px;
+            }
+
+            .card::before {
+                width: 115%;
+                height: 115%;
+                top: -7.5%;
+                left: -10%;
+            }
+
+            .names {
+                font-size: 3rem;
+            }
+        }
+
+        /* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+        @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+            /* CSS */
+            .card {
+                width: 85%;
+                padding: 40px 30px;
+            }
+
+            .card::before {
+                width: 115%;
+                height: 115%;
+                top: -7.5%;
+                left: -10%;
+            }
+
+            .names {
+                font-size: 3rem;
+            }
+        }
+
+        /* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+        @media (min-width: 481px) and (max-width: 767px) {
+
+            /* CSS */
+            .card {
+                width: 100%;
+                height: 50rem;
+                padding: 35px 20px;
+            }
+
+            .card::before {
+                width: 135%;
+                height: 125%;
+                top: -12.5%;
+                left: -20%;
+            }
+
+            .names {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+        @media (min-width: 320px) and (max-width: 480px) {
+
+            /* CSS */
             body {
                 padding: 30px 15px;
             }
@@ -459,110 +640,19 @@
                 bottom: -10px;
                 right: -10px;
             }
+
         }
 
-        /* iPhones 6/7/8 Plus & Modern Large Phones ----------- */
-        @media only screen and (min-device-width : 414px) and (max-device-width : 736px) {
-            .card {
-                width: 100%;
-                height: 50rem;
-                padding: 35px 20px;
-            }
-
-            .card::before {
-                width: 135%;
-                height: 125%;
-                top: -12.5%;
-                left: -20%;
-            }
-
-            .names {
-                font-size: 2.2rem;
-            }
-        }
-
-        /* iPads (portrait and landscape) ----------- */
-        @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-            .card {
-                width: 85%;
-                padding: 40px 30px;
-            }
-
-            .card::before {
-                width: 115%;
-                height: 115%;
-                top: -7.5%;
-                left: -10%;
-            }
-
-            .names {
-                font-size: 3rem;
-            }
-        }
-
-        @media only screen and (max-device-width : 1220px) {
-            .card {
-                width: 85%;
-                padding: 40px 30px;
-            }
-
-            .card::before {
-                width: 115%;
-                height: 115%;
-                top: -7.5%;
-                left: -10%;
-            }
-
-            .names {
-                font-size: 3rem;
-            }
-        }
-
-        /* Desktops and laptops ----------- */
-        @media only screen and (min-width : 1224px) {
-
-            /* Standard Desktop Styles are mostly default, but ensuring max-width */
-            .card {
-                max-width: 620px;
-            }
-
-            .card::before {
-                width: 135%;
-                height: 130%;
-                top: -15%;
-                left: -20.5%;
-            }
-        }
-
-        /* Large screens ----------- */
-        @media only screen and (min-width : 1824px) {
-            .card {
-                max-width: 700px;
-            }
-
-            .names {
-                font-size: 4rem;
-            }
-        }
-
-        /* Samsung Galaxy S7 Edge / High DPI Androids ----------- */
-        @media only screen and (-webkit-min-device-pixel-ratio: 3),
-        only screen and (min-resolution: 192dpi) and (max-width:640px) {
-            .card {
-                width: 90%;
-            }
-
-            .names {
-                font-size: 2rem;
-            }
-        }
+        /****************************************************/
     </style>
 </head>
 
 <body>
     <div class="bg-fixed-layer"></div>
 
+    <div id="inner-petals-container"></div>
     <div class="card">
+
         <img src="./images/s2.webp" class="corner-flower top-left" alt="floral decor">
         <img src="./images/s2.webp" class="corner-flower bottom-right" alt="floral decor">
 
@@ -634,6 +724,64 @@
                 countdownElement.innerHTML = `${days}d ${hours}h ${seconds}s`;
             }
         }, 1000);
+
+        // --- OPTIMIZED FALLING PETALS FUNCTION ---
+        function startPetalEffect() {
+            // 1. Detect if the device is Mobile (screen less than 600px)
+            const isMobile = window.innerWidth < 600;
+
+            // 2. Set Configurations based on device
+            // Mobile: Spawn slower (1200ms) to save battery and space
+            // Desktop: Spawn faster (600ms) for a fuller look
+            const spawnInterval = isMobile ? 1200 : 600;
+
+            // Mobile: Size between 20px and 45px
+            // Desktop: Size between 40px and 80px
+            const minSize = isMobile ? 20 : 40;
+            const sizeRange = isMobile ? 60 : 60; // Variation amount
+
+            function createInnerPetal() {
+                const container = document.getElementById('inner-petals-container');
+                // Safety check: if container doesn't exist, stop
+                if (!container) return;
+
+                const petal = document.createElement('img');
+
+                const petalImages = [
+                    './images/white-flower.webp',
+                    './images/light-blue-flower.png'
+                ];
+
+                const randomImage = petalImages[Math.floor(Math.random() * petalImages.length)];
+                petal.src = randomImage;
+
+                petal.classList.add('inner-petal');
+
+                // Random Horizontal Position
+                petal.style.left = Math.random() * 95 + '%';
+
+                // OPTIMIZED SIZING LOGIC
+                const size = Math.random() * sizeRange + minSize;
+                petal.style.width = size + 'px';
+
+                // Random Animation Duration (Slower fall for smaller petals looks more natural)
+                // Between 5s and 10s
+                petal.style.animationDuration = Math.random() * 5 + 5 + 's';
+
+                container.appendChild(petal);
+
+                // Remove after animation to prevent memory leak
+                setTimeout(() => {
+                    petal.remove();
+                }, 10000); // Matches max animation time
+            }
+
+            // Start the interval with the optimized speed
+            setInterval(createInnerPetal, spawnInterval);
+        }
+
+        // Start the effect
+        startPetalEffect();
     </script>
 </body>
 
