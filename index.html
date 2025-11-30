@@ -133,7 +133,6 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
             z-index: 0;
             /* Behind text (20) but above bg */
             pointer-events: none;
@@ -738,8 +737,8 @@
             // Mobile: Size between 20px and 45px
             // Desktop: Size between 40px and 80px
             const minSize = isMobile ? 20 : 40;
-            const sizeRange = isMobile ? 60 : 60; // Variation amount
-
+            const sizeRange = isMobile ? 30 : 60;
+            
             function createInnerPetal() {
                 const container = document.getElementById('inner-petals-container');
                 // Safety check: if container doesn't exist, stop
@@ -758,8 +757,7 @@
                 petal.classList.add('inner-petal');
 
                 // Random Horizontal Position
-                petal.style.left = Math.random() * 95 + '%';
-
+                petal.style.left = (Math.random() * 70 + 10) + '%';
                 // OPTIMIZED SIZING LOGIC
                 const size = Math.random() * sizeRange + minSize;
                 petal.style.width = size + 'px';
