@@ -664,26 +664,48 @@
   ##Screen = B/w 481px to 767px
 */
 
-        @media (min-width: 481px) and (max-width: 767px) {
+@media (min-width: 481px) and (max-width: 767px) {
+    body {
+        /* CHANGED: Remove top/bottom padding so Flexbox calculates true center */
+        padding: 0 15px; 
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        
+        /* ADDED: Ensures padding doesn't add to the total 100vh height */
+        box-sizing: border-box; 
+    }
 
-            /* CSS */
-            .card {
-                width: 100%;
-                height: 60rem;
-                padding: 35px 20px;
-            }
+    /* CSS */
+    .card {
+        width: 100%;
+        max-width: 580px;
 
-            .card::before {
-                width: 135%;
-                height: 125%;
-                top: -12.5%;
-                left: -20%;
-            }
+        /* CHANGED: 'min-height' is safer than 'height' on mobile. 
+           If content is long, the card stretches. If content is short, it stays 55rem. */
+        min-height: 55rem; 
+        
+        /* OPTIONAL: If the card is actually taller than the screen (55rem is huge), 
+           allow it to fit within the viewport */
+        /* height: auto; */ 
+        
+        padding: 35px 20px;
+        margin: 0 auto;
+    }
 
-            .names {
-                font-size: 2.2rem;
-            }
-        }
+    .card::before {
+        width: 135%;
+        height: 125%;
+        top: -12.5%;
+        left: -20%;
+    }
+
+    .names {
+        font-size: 2.2rem;
+    }
+}
 
         /* 
   ##Device = Most of the Smartphones Mobiles (Portrait)
