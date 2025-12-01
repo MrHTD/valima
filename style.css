@@ -229,7 +229,7 @@
 
             100% {
                 /* Increased from 800px to 1200px to ensure they hit the floor */
-                transform: translateY(1200px) rotate(360deg) translateX(50px);
+                transform: translateY(1200px) rotate(90deg) translateX(50px);
                 opacity: 0;
             }
         }

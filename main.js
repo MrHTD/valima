@@ -40,8 +40,8 @@ function startPetalEffect() {
         const petal = document.createElement('img');
 
         const petalImages = [
-            './images/white-flower.webp',
-            './images/light-blue-flower.png'
+            './images/vecteezy_elegant-floral-composition-featuring-detailed-art-inspired_55531363.png',
+            './images/vecteezy_ai-generated-watercolor-painting-of-rose_41321019.png'
         ];
 
         const randomImage = petalImages[Math.floor(Math.random() * petalImages.length)];
