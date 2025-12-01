@@ -17,7 +17,6 @@ const x = setInterval(function () {
         countdownElement.innerHTML = `${days}d ${hours}h ${seconds}s`;
     }
 }, 1000);
-
 // --- OPTIMIZED FALLING PETALS FUNCTION ---
 function startPetalEffect() {
     // 1. Detect if the device is Mobile (screen less than 600px)
@@ -63,9 +62,9 @@ function startPetalEffect() {
         container.appendChild(petal);
 
         // Remove after animation to prevent memory leak
-        setTimeout(() => {
+        petal.addEventListener('animationend', () => {
             petal.remove();
-        }, 10000); // Matches max animation time
+        });
     }
 
     // Start the interval with the optimized speed

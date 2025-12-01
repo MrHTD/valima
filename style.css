@@ -482,32 +482,64 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
+        /* 1. Define the Breathing Animation */
+        @keyframes breath {
+            0% {
+                transform: scale(1);
+                color: var(--navy-blue);
+            }
+
+            50% {
+                transform: scale(1.05);
+                color: var(--soft-gold);
+                /* Change text color */
+                /* Note: We don't need 'fill' here if we use currentColor below */
+            }
+
+            100% {
+                transform: scale(1);
+                color: var(--navy-blue);
+            }
+        }
+
         .venue-link {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
             margin-top: 8px;
+
+            /* DEFAULT COLOR */
             color: var(--navy-blue);
+
             text-decoration: none;
-            transition: all 0.3s ease;
             font-weight: 700;
+
+            /* 2. Apply animation */
+            animation: breath 2.5s ease-in-out infinite;
+
+            /* Smooth transition for hover */
+            transition: all 0.3s ease;
         }
 
-        .venue-link:hover {
-            transform: translateY(-2px);
-            color: var(--soft-gold);
-        }
-
+        /* 3. The Magic Fix: Make the icon inherit the parent's color */
         .map-icon {
             width: 1.3em;
             height: 1.3em;
-            fill: var(--soft-gold);
+
+            /* CHANGE THIS: 'currentColor' means "Use whatever color my parent text has" */
+            fill: currentColor;
+
             transition: transform 0.3s ease;
         }
 
-        .venue-link:hover .map-icon {
-            transform: scale(1.2);
+        /* 4. On Hover behavior */
+        .venue-link:hover {
+            /* animation: none; */
+            /* Locks it slightly larger */
+            cursor: pointer;
+            color: var(--soft-gold) !important;
+            /* Forces gold on hover */
         }
 
         /* ANIMATIONS KEYFRAMES */
@@ -664,48 +696,55 @@
   ##Screen = B/w 481px to 767px
 */
 
-@media (min-width: 481px) and (max-width: 767px) {
-    body {
-        /* CHANGED: Remove top/bottom padding so Flexbox calculates true center */
-        padding: 0 15px; 
-        
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        
-        /* ADDED: Ensures padding doesn't add to the total 100vh height */
-        box-sizing: border-box; 
-    }
+        @media (min-width: 481px) and (max-width: 767px) {
+            body {
+                /* CHANGED: Remove top/bottom padding so Flexbox calculates true center */
+                padding: 0 15px;
 
-    /* CSS */
-    .card {
-        width: 100%;
-        max-width: 580px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
 
-        /* CHANGED: 'min-height' is safer than 'height' on mobile. 
+                /* ADDED: Ensures padding doesn't add to the total 100vh height */
+                box-sizing: border-box;
+            }
+
+            /* CSS */
+            .card {
+                width: 100%;
+                max-width: 580px;
+
+                /* CHANGED: 'min-height' is safer than 'height' on mobile. 
            If content is long, the card stretches. If content is short, it stays 55rem. */
-        min-height: 55rem; 
-        
-        /* OPTIONAL: If the card is actually taller than the screen (55rem is huge), 
+                min-height: 55rem;
+
+                /* OPTIONAL: If the card is actually taller than the screen (55rem is huge), 
            allow it to fit within the viewport */
-        /* height: auto; */ 
-        
-        padding: 35px 20px;
-        margin: 0 auto;
-    }
+                /* height: auto; */
 
-    .card::before {
-        width: 135%;
-        height: 125%;
-        top: -12.5%;
-        left: -20%;
-    }
+                padding: 35px 20px;
+                margin: 0 auto;
+            }
 
-    .names {
-        font-size: 2.2rem;
-    }
-}
+            .card::before {
+                width: 135%;
+                height: 128%;
+                top: -14%;
+                left: -21%;
+            }
+
+            .names {
+                font-size: 2.6rem;
+                text-align: center;
+
+            }
+
+            .fname {
+                font-size: 0.9rem;
+                text-align: center;
+            }
+        }
 
         /* 
   ##Device = Most of the Smartphones Mobiles (Portrait)
