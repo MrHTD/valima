@@ -689,6 +689,52 @@
             .names {
                 font-size: 3rem;
             }
+
+            /* Target screens that are short (common laptops are 768px - 900px high) */
+            @media screen and (max-height: 900px) {
+
+                body {
+                    /* Switch from center to flex-start so the top doesn't get cut off when scrolling */
+                    align-items: flex-start;
+                    padding-top: 40px;
+                    padding-bottom: 40px;
+                    height: auto;
+                    /* Allow body to grow with scroll */
+                }
+
+                .card {
+                    /* Remove the forced 850px height */
+                    min-height: auto;
+                    height: auto;
+                    /* Let the card fit the content naturally */
+                    max-width: 550px;
+                }
+
+                .content {
+                    /* DRASTICALLY reduce the 180px top padding to fit short screens */
+                    padding: 60px 30px 50px 30px;
+                    gap: 8px;
+                    /* Reduce gap between elements */
+                }
+
+                h1.names {
+                    /* Scale down title slightly */
+                    font-size: 3rem;
+                    margin: 5px 0;
+                }
+
+                .watercolor-blob {
+                    /* Shrink blobs so they don't dominate the smaller card space */
+                    width: 250px;
+                    height: 250px;
+                }
+
+                .divider {
+                    margin: 15px auto;
+                }
+
+            }
+
         }
 
         /* 
@@ -699,15 +745,7 @@
         @media (min-width: 481px) and (max-width: 767px) {
             body {
                 /* CHANGED: Remove top/bottom padding so Flexbox calculates true center */
-                padding: 0 15px;
-
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 100vh;
-
-                /* ADDED: Ensures padding doesn't add to the total 100vh height */
-                box-sizing: border-box;
+                padding-bottom: 10rem;
             }
 
             /* CSS */
