@@ -21,7 +21,9 @@
             color: var(--navy-blue);
             padding: 20px;
             overflow-x: hidden;
-            overflow-y: hidden;
+            overflow-y: auto;
+            overscroll-behavior: none;
+
         }
 
         body::before {
@@ -30,8 +32,9 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: clamp(120%, 130%, 150%);
+            height: clamp(120%, 130%, 150%);
+
             background: rgba(0, 0, 0, 0.2);
             z-index: -5;
             /* sits between bg-layer and content */
@@ -159,8 +162,9 @@
             content: '';
             position: absolute;
             /* Desktop Default: 120% */
-            width: 120%;
-            height: 120%;
+            width: clamp(120%, 130%, 150%);
+            height: clamp(120%, 130%, 150%);
+
             top: -10%;
             left: -10%;
             background-image: url('./images/border.webp');
@@ -189,14 +193,17 @@
 
         /* --- NEW: CONTAINER FOR INTERNAL PETALS --- */
         #inner-petals-container {
-            position: absolute;
+            position: fixed;
+            /* 🔑 KEY FIX */
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 0;
-            /* Behind text (20) but above bg */
+            height: 100vh;
+            /* Lock to viewport */
+            overflow: hidden;
+            /* Prevent scroll growth */
             pointer-events: none;
-            /* Allows clicking text through petals */
+            z-index: 0;
         }
 
         /* --- NEW: PETAL IMAGE STYLE --- */
@@ -237,8 +244,8 @@
         /* --- CORNER FLOWERS --- */
         .corner-flower {
             position: absolute;
-            width: 30%;
-            max-width: 250px;
+            width: clamp(6rem, 50%, 20rem);
+            max-width: 100%;
             height: auto;
             z-index: 10;
             pointer-events: none;
@@ -248,16 +255,16 @@
 
         /* 1. TOP LEFT (Specific Animation with Rotation) */
         .top-left {
-            top: -25px;
-            left: -25px;
+            top: -7%;
+            left: -7%;
             /* We call a specific animation that INCLUDES the rotation */
             animation: bloomTopLeft 1.2s ease-out 0.8s forwards;
         }
 
         /* 2. BOTTOM RIGHT (Normal Animation) */
         .bottom-right {
-            bottom: -25px;
-            right: -25px;
+            bottom: -7%;
+            right: -7%;
             animation: bloomBottomRight 1.2s ease-out 0.8s forwards;
         }
 
@@ -308,7 +315,7 @@
 
         .intro {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 0.9rem;
+            font-size: clamp(0.75rem, 2.5vw, 0.9rem);
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 15px;
@@ -342,7 +349,12 @@
             line-height: 1.2;
             color: var(--navy-blue);
             text-shadow: 0 5px 10px rgba(199, 168, 107, 0.25);
-            white-space: nowrap;
+
+            .names {
+                white-space: normal;
+                text-align: center;
+                line-height: 1.15;
+            }
 
             /* INITIAL STATE: Hidden by mask */
             opacity: 1;
@@ -394,7 +406,8 @@
 
         .invite-text {
             font-family: 'Cinzel', serif;
-            font-size: 0.75rem;
+            font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+            font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
             margin: 20px 0;
@@ -406,13 +419,45 @@
             animation-delay: 0.8s;
         }
 
+        /* Make each character roll in horizontally like Canva */
+        .roll-line {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .roll-line span {
+            display: inline-block;
+            transform: translateY(100%);
+            opacity: 0;
+            animation: rollIn 0.8s ease-out forwards;
+        }
+
+        @keyframes rollIn {
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            60% {
+                transform: translateY(-10%);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(0%);
+                opacity: 1;
+            }
+        }
+
+
         .date-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             gap: 10px;
-            animation-delay: 1.0s;
+            animation-delay: 1s;
         }
 
         .date-part {
@@ -449,20 +494,39 @@
             width: 1px;
             height: 40px;
             background-color: var(--navy-blue);
-            opacity: 0.5;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: rollSeparator 0.5s forwards;
+            animation-delay: 1.2s;
+            /* adjust timing */
+        }
+
+        @keyframes rollSeparator {
+            to {
+                opacity: 0.5;
+                transform: translateY(0);
+            }
         }
 
         .details {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             line-height: 1.6;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            animation-delay: 1.2s;
+        }
+
+        .time {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            /* margin-bottom: 25px; */
             font-weight: 600;
             animation-delay: 1.2s;
         }
 
         .reception {
             font-family: 'Great Vibes', cursive;
-            font-size: 2rem;
+            font-size: clamp(1.9rem, 6vw, 2.3rem);
             color: var(--navy-blue);
             margin-bottom: 20px;
             animation-delay: 1.4s;
@@ -751,18 +815,10 @@
             /* CSS */
             .card {
                 width: 100%;
-                max-width: 580px;
-
-                /* CHANGED: 'min-height' is safer than 'height' on mobile. 
-           If content is long, the card stretches. If content is short, it stays 55rem. */
-                min-height: 55rem;
-
-                /* OPTIONAL: If the card is actually taller than the screen (55rem is huge), 
-           allow it to fit within the viewport */
-                /* height: auto; */
-
-                padding: 35px 20px;
-                margin: 0 auto;
+                max-width: 620px;
+                padding: 4% 6%;
+                height: auto;
+                min-height: unset;
             }
 
             .card::before {
@@ -797,10 +853,10 @@
             }
 
             .card {
-                width: 100%;
-                height: 45rem;
-                padding: 30px 10px;
+                height: auto;
+                min-height: unset;
             }
+
 
             /* Tighten the expanding border for mobile */
             .card::before {
@@ -810,6 +866,12 @@
                 left: -28%;
             }
 
+            .intro {
+                font-size: 0.6rem;
+                margin-top: 10%;
+                margin-bottom: 0.5rem;
+            }
+
             /* Fonts adjustments */
             .names {
                 font-size: 1.8rem;
@@ -817,28 +879,82 @@
                 line-height: 1.1;
             }
 
+            .fname {
+                font-size: 0.5rem;
+            }
+
+            .ampersand {
+                font-size: 1rem;
+                margin: 0;
+            }
+
+            .invite-text {
+                font-size: 0.5rem;
+                margin-top: 0;
+                width: 90%;
+            }
+
             .day-number {
-                font-size: 2rem;
+                font-size: 1.2rem;
             }
 
             .month,
             .year {
+                font-size: 0.8rem;
+                font-weight: 600;
+                letter-spacing: 1px;
+            }
+
+            .day-group {
+                display: flex;
+                flex-direction: column;
+                line-height: 1;
+            }
+
+            .day-name {
+                font-size: 0.6rem;
+            }
+
+            .time {
                 font-size: 1rem;
             }
 
+            .separator {
+                width: 1px;
+                height: 60%;
+            }
+
+            .venue-link {
+                font-size: 0.8rem;
+            }
+
             .corner-flower {
-                width: 25%;
-                opacity: 0.8;
+                position: absolute;
+                width: clamp(10rem, 20vw, 10rem);
+                max-width: 100%;
+                height: auto;
+                pointer-events: none;
             }
 
             .top-left {
-                top: -10px;
-                left: -10px;
+                top: -5%;
+                left: -5%;
             }
 
             .bottom-right {
-                bottom: -10px;
-                right: -10px;
+                bottom: -5%;
+                right: -5%;
             }
+
+            .reception {
+                font-size: 1.5rem;
+            }
+
+            .countdown {
+                font-size: 0.5rem;
+                padding: 0.5rem 0.5rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+
 
         }

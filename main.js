@@ -19,63 +19,92 @@ const x = setInterval(function () {
 }, 1000);
 // --- OPTIMIZED FALLING PETALS FUNCTION ---
 function startPetalEffect() {
-    // 1. Detect if the device is Mobile (screen less than 600px)
+    // Respect accessibility setting
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+    }
+
+    const container = document.getElementById('inner-petals-container');
+    if (!container) return;
+
     const isMobile = window.innerWidth < 600;
-
-    // 2. Set Configurations based on device
-    // Mobile: Spawn slower (1200ms) to save battery and space
-    // Desktop: Spawn faster (600ms) for a fuller look
     const spawnInterval = isMobile ? 1200 : 600;
-
-    // Mobile: Size between 20px and 45px
-    // Desktop: Size between 40px and 80px
     const minSize = isMobile ? 20 : 40;
     const sizeRange = isMobile ? 30 : 60;
 
-    function createInnerPetal() {
-        const container = document.getElementById('inner-petals-container');
-        // Safety check: if container doesn't exist, stop
-        if (!container) return;
+    const petalImages = [
+        './images/vecteezy_elegant-floral-composition-featuring-detailed-art-inspired_55531363.png',
+        './images/vecteezy_ai-generated-watercolor-painting-of-rose_41321019.png'
+    ];
 
+    let petalTimer;
+
+    function createPetal() {
         const petal = document.createElement('img');
+        petal.src = petalImages[Math.floor(Math.random() * petalImages.length)];
+        petal.className = 'inner-petal';
 
-        const petalImages = [
-            './images/vecteezy_elegant-floral-composition-featuring-detailed-art-inspired_55531363.png',
-            './images/vecteezy_ai-generated-watercolor-painting-of-rose_41321019.png'
-        ];
-
-        const randomImage = petalImages[Math.floor(Math.random() * petalImages.length)];
-        petal.src = randomImage;
-
-        petal.classList.add('inner-petal');
-
-        // Random Horizontal Position
         petal.style.left = (Math.random() * 70 + 10) + '%';
-        // OPTIMIZED SIZING LOGIC
-        const size = Math.random() * sizeRange + minSize;
-        petal.style.width = size + 'px';
-
-        // Random Animation Duration (Slower fall for smaller petals looks more natural)
-        // Between 5s and 10s
-        petal.style.animationDuration = Math.random() * 5 + 5 + 's';
+        petal.style.width = (Math.random() * sizeRange + minSize) + 'px';
+        petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
 
         container.appendChild(petal);
-
-        // Remove after animation to prevent memory leak
-        petal.addEventListener('animationend', () => {
-            petal.remove();
-        });
+        petal.addEventListener('animationend', () => petal.remove());
     }
 
-    // Start the interval with the optimized speed
-    setInterval(createInnerPetal, spawnInterval);
+    function start() {
+        if (!petalTimer) {
+            petalTimer = setInterval(createPetal, spawnInterval);
+        }
+    }
+
+    function stop() {
+        clearInterval(petalTimer);
+        petalTimer = null;
+    }
+
+    // Pause when tab hidden (huge battery win)
+    document.addEventListener('visibilitychange', () => {
+        document.hidden ? stop() : start();
+    });
+
+    start();
 }
 
-// Find the element
-const allNames = document.querySelectorAll('.names, .fname, .ampersand');
-allNames.forEach((element, index) => {
-    element.classList.add('run-animation');
-});
 
+// Find the element
+document
+    .querySelectorAll('.names, .fname, .ampersand')
+    .forEach(el => el.classList.add('run-animation'));
+
+//roll text animation
+function rollEachCharacter() {
+    const initialDelay = 1.0;
+
+    document.querySelectorAll('.roll-line').forEach((lineEl, lineIndex) => {
+        const text = lineEl.dataset.text || lineEl.textContent;
+        lineEl.innerHTML = '';
+
+        [...text].forEach((char, charIndex) => {
+            const span = document.createElement('span');
+
+            if (char === ' ') {
+                // Create a non-breaking space span to preserve spacing
+                span.className = 'roll-text space';
+                span.textContent = '\u00A0';
+            } else {
+                span.className = 'roll-text';
+                span.textContent = char;
+                span.style.animationDelay = `${(initialDelay + lineIndex * 0.2 + charIndex * 0.1).toFixed(2)}s`;
+            }
+
+            lineEl.appendChild(span);
+        });
+    });
+}
+
+window.addEventListener('DOMContentLoaded', rollEachCharacter);
 // Start the effect
 startPetalEffect();
+
+

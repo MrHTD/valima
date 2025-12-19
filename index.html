@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=750, user-scalable=yes">
+    <!-- <meta name="viewport" content="width=750, user-scalable=yes"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Valima Invitation</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +14,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <link rel="preload" as="image" href="./images/bg3.png">
-
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
 
     <meta property="og:title" content="Valima Invitation: Muhammad Waliullah & Laiba Baig" />
     <meta property="og:type" content="website" />
@@ -28,8 +29,8 @@
 
 <body>
     <div class="bg-fixed-layer"></div>
-
     <div id="inner-petals-container"></div>
+
     <div class="card">
         <img src="./images/s2.webp" class="corner-flower top-left" alt="floral decor">
         <img src="./images/s2.webp" class="corner-flower bottom-right" alt="floral decor">
@@ -49,19 +50,21 @@
                 invite you to join them for their Valima Reception
             </div>
 
-            <div class="date-container anim-text">
-                <div class="date-part month">MAR</div>
-                <div class="separator"></div>
+            <div class="date-container roll-text">
+                <div class="date-part month roll-line" data-text="MAR">MAR</div>
+                <div class="separator roll-line"></div>
                 <div class="date-part day-group">
-                    <span class="day-name">SUNDAY</span>
-                    <span class="day-number">29</span>
+                    <span class="day-name roll-line" data-text="SUNDAY">SUNDAY</span>
+                    <span class="day-number roll-line" data-text="29">29</span>
                 </div>
-                <div class="separator"></div>
-                <div class="date-part year">2026</div>
+                <div class="separator roll-line"></div>
+                <div class="date-part year roll-line" data-text="2026">2026</div>
+            </div>
+            <div class="time roll-line" data-text="At 8:00 PM">
+                At 8:00 PM
             </div>
 
             <div class="details anim-text">
-                At 8:00 PM<br>
                 <a href="https://www.google.com/maps/search/?api=1&query=Celebration+Banquet+Karachi" target="_blank"
                     class="venue-link">
                     <svg class="map-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
