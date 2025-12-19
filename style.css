@@ -556,15 +556,27 @@
 
         .countdown {
             font-family: 'Lato', sans-serif;
-            font-size: 0.8rem;
-            padding: 10px 20px;
-            color: var(--white);
-            background: var(--soft-gold);
+            font-size: 0.85rem;
+            padding: 10px 25px;
+
+            /* Glass Effect */
+            color: var(--navy-blue);
+            /* Dark text for contrast */
+            background: rgba(255, 255, 255, 0.25);
+            /* Semi-transparent */
+            backdrop-filter: blur(10px);
+            /* The blur magic */
+            -webkit-backdrop-filter: blur(10px);
+
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 50px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+
             display: inline-block;
-            white-space: nowrap;
-            animation-delay: 1.6s;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            letter-spacing: 1px;
+
+            position: relative;
+            top: 30px; /* Moves it down 30px from its original spot */
         }
 
         /* 1. Define the Breathing Animation */
@@ -959,7 +971,7 @@
 
             .top-left {
                 top: -6.5%;
-                left: -6.55%;
+                left: -6.5%;
             }
 
             .bottom-right {
@@ -974,7 +986,8 @@
             .countdown {
                 font-size: 0.5rem;
                 padding: 0.5rem 0.5rem;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+                top: -10px;
             }
 
         }
