@@ -172,9 +172,8 @@
             background-position: center;
             z-index: 0;
             pointer-events: none;
-            opacity: 0;
-            animation: bloom 0.8s ease-out 0.8s forwards;
-
+            /* opacity: 0;
+            animation: bloom 0.8s ease-out 0.8s forwards; */
         }
 
         @keyframes bloom {
@@ -416,7 +415,30 @@
             display: inline-block;
             padding-bottom: 5px;
             width: 80%;
-            animation-delay: 0.8s;
+
+            /* animation-delay: 1.5s; */
+        }
+
+        @keyframes paperUnfold {
+            0% {
+                opacity: 0;
+                /* Smashed flat vertically */
+                transform: scaleY(0);
+            }
+
+            100% {
+                opacity: 1;
+                /* Opens up to full height */
+                transform: scaleY(1);
+            }
+        }
+
+        .anim-invite {
+            opacity: 0;
+            transform-origin: top center;
+            /* Important for the unfold effect */
+            /* Soft bounce at the end */
+            animation: paperUnfold 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.5s forwards;
         }
 
         /* Make each character roll in horizontally like Canva */
@@ -509,7 +531,7 @@
         }
 
         .details {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             line-height: 1.6;
             margin-bottom: 10px;
             font-weight: 600;
@@ -537,8 +559,7 @@
             font-size: 0.8rem;
             padding: 10px 20px;
             color: var(--white);
-            background: var(--navy-blue);
-            border: 1px solid #eee;
+            background: var(--soft-gold);
             border-radius: 50px;
             display: inline-block;
             white-space: nowrap;
@@ -550,7 +571,7 @@
         @keyframes breath {
             0% {
                 transform: scale(1);
-                color: var(--navy-blue);
+                color: var(--soft-gold);
             }
 
             50% {
@@ -562,7 +583,7 @@
 
             100% {
                 transform: scale(1);
-                color: var(--navy-blue);
+                color: var(--soft-gold);
             }
         }
 
@@ -867,7 +888,7 @@
             }
 
             .intro {
-                font-size: 0.6rem;
+                font-size: 0.5rem;
                 margin-top: 10%;
                 margin-bottom: 0.5rem;
             }
@@ -937,17 +958,17 @@
             }
 
             .top-left {
-                top: -5%;
-                left: -5%;
+                top: -6.5%;
+                left: -6.55%;
             }
 
             .bottom-right {
-                bottom: -5%;
-                right: -5%;
+                bottom: -6.5%;
+                right: -6.5%;
             }
 
             .reception {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
             }
 
             .countdown {
@@ -955,6 +976,5 @@
                 padding: 0.5rem 0.5rem;
                 box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             }
-
 
         }
